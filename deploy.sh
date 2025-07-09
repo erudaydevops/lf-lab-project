@@ -1,5 +1,13 @@
 #!/bin/bash
+
+# Go to project directory
 cd /home/ubuntu/LF-Labs
+
+# Install dependencies
 npm install
+
+# Build Next.js app
 npm run build
-pm2 restart app || pm2 start dist/index.js --name app
+
+# Restart or start the app with PM2
+pm2 restart next-app || pm2 start npm --name "next-app" -- run start:prod
