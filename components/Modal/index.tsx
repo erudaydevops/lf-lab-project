@@ -10,6 +10,7 @@ interface ModalProps {
   children: ReactNode
   className?: string
   title?: string
+  userVerified: boolean   // ✅ Fixed: Ab prop defined hai
 }
 
 export const Modal = ({
