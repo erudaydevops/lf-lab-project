@@ -2,14 +2,14 @@ name: Deploy to EC2
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout repository
       uses: actions/checkout@v3
 
     - name: Setup Node.js
@@ -36,5 +36,5 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        scp -r ./ ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USERNAME }}/LF-Labs
-        ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "cd /home/${{ secrets.EC2_USERNAME }}/LF-Labs && chmod +x deploy.sh && ./deploy.sh"
+        scp -r ./ ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USERNAME }}/lf-lab-project
+        ssh ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "cd /home/${{ secrets.EC2_USERNAME }}/lf-lab-project && chmod +x deploy.sh && ./deploy.sh"
