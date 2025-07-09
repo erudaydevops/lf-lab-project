@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "start:prod": "NODE_ENV=production next start",
+    "lint": "next lint",
+    "postinstall": "next build"
   },
   "dependencies": {
     "@darkroom.engineering/tempus": "^0.0.46",
@@ -30,7 +32,7 @@
     "eslint-config-next": "^14.2.7",
     "typescript": "^5.5.4"
   },
-  "description": "This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).",
+  "description": "This is a Next.js project bootstrapped with create-next-app.",
   "main": "index.js",
   "author": "",
   "license": "ISC"
