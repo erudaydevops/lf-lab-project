@@ -1,0 +1,48 @@
+@import "styles/mixins";
+
+.hero {
+  --padding: calc(160px + 24 * (100vw - 320px) / 1080);
+  padding: calc(var(--padding) + var(--header-height) / 1.5) 0 var(--padding);
+  text-align: right;
+  @include flex;
+
+  h1 {
+    font-size: calc(56px + 80 * (100vw - 320px) / 1080);
+
+    @include max($md) {
+      margin-top: var(--padding);
+    }
+  }
+
+  p {
+    line-height: 1.5;
+    font-size: calc(16px + 6 * (100vw - 320px) / 1080);
+    margin: var(--main-padding) 0 var(--main-padding-2);
+  }
+}
+
+.illu {
+  inset: 0;
+  color: var(--primary);
+
+  & > * {
+    position: absolute;
+    top: 40%;
+    width: 60%;
+    right: calc(30% + 400 * (100vw - 320px) / 1080);
+    min-width: calc(600px + 350 * (100vw - 320px) / 1080);
+    transform: translate(0, -50%);
+  }
+
+  @include max($md) {
+    & > * {
+      top: 30%;
+    }
+  }
+}
+
+.blur {
+  img {
+    left: 20%;
+  }
+}

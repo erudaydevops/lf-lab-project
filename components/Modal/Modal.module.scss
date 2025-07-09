@@ -1,0 +1,87 @@
+@import "styles/mixins";
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    background-color: rgba(2, 2, 2, 0.5);
+    display: flex;
+    justify-content: center;
+    overflow: scroll;
+    padding: var(--size-5);
+    text-align: center;
+
+    &Close {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+    }
+}
+
+.modal {
+    --modal-width: calc(400px + 100 * (100vw - 320px) / 1080);
+    --modal-padding: var(--size-5);
+    background-color: #FFFFFF24;
+    @include backdrop(12px);
+    border-radius: var(--radius-2);
+    margin: auto;
+    padding: var(--modal-padding);
+    width: var(--modal-width);
+    max-width: calc(var(--wrapper-max) / 4);
+    z-index: 10;
+    animation: revealModal 0.3s var(--cubic);
+    animation-fill-mode: both;
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--modal-padding) / 1.5);
+    align-items: center;
+    font-size: 14px;
+    letter-spacing: .3px;
+
+    @keyframes revealModal {
+        from {
+            top: 25px;
+            @include auto-alpha(0);
+        }
+
+        to {
+            top: 0;
+            @include auto-alpha(1);
+        }
+    }
+}
+
+.close {
+    transition: background-color var(--transition-link);
+    fill: #FFF;
+    position: absolute;
+    width: var(--size-4);
+    height: var(--size-4);
+    background-color: var(--bg-opacity-1), 50%;
+    right: 5px;
+    top: 5px;
+    border-radius: var(--radius-2);
+    cursor: pointer;
+    z-index: 15;
+
+    svg{
+        width: 50%;
+        height: 50%;
+    }
+
+    &:hover {
+        background-color: var(--pink);
+    }
+}
+
+.title {
+    font-weight: 800;
+    font-size: 1.33em;
+}
+.ModalButton{
+    width: 50%;
+}
+.symbols{
+    width: 50px;
+    height: 50px;
+}

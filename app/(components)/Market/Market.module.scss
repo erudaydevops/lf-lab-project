@@ -1,0 +1,125 @@
+@import "styles/mixins";
+
+.market {
+  padding: var(--main-spacing) 0;
+
+  p {
+    line-height: 1.5;
+    font-size: calc(16px + 6 * (100vw - 320px) / 1080);
+  }
+
+  .title {
+    font-size: calc(40px + 32 * (100vw - 320px) / 1080);
+    width: 100%;
+
+    & > span:first-child {
+      &::after {
+        content: "Market Making";
+        position: absolute;
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        font-family: var(--font-secondary);
+        text-transform: uppercase;
+        font-weight: 200;
+        color: var(--primary);
+        top: 24%;
+        left: calc(230px + 165 * (100vw - 320px) / 1080);
+        line-height: 1;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .icon {
+    --size: 33.33%;
+    position: relative;
+    flex-basis: var(--size) !important;
+    min-width: var(--size) !important;
+    max-width: var(--size) !important;
+    color: var(--primary);
+
+    & > * {
+      position: relative;
+      transform: translateX(-14.5%) scale(1.1);
+    }
+
+    @include max($lg) {
+      --size: calc(100px + 200 * (100vw - 320px) / 1080);
+      stroke-width: 0.05em;
+    }
+  }
+}
+
+.heading {
+  @include flex(space-between, center);
+  gap: var(--main-spacing);
+
+  .right {
+    flex: 1;
+    @include flex(space-between, flex-start, column);
+    gap: var(--main-padding);
+    min-width: calc(100% / 3);
+  }
+
+  @include max($lg) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--main-padding);
+
+    .right {
+      gap: var(--main-padding-2);
+      width: calc(500px + 200 * (100vw - 320px) / 1080);
+      max-width: 100%;
+    }
+  }
+}
+
+.blur {
+  left: 20%;
+}
+
+.list {
+  --n: 2;
+  margin-top: var(--main-spacing);
+  @include flex(stretch, stretch);
+  flex-wrap: wrap;
+  gap: var(--main-padding-2) 0;
+
+  @include max($sm) {
+    --n: 1;
+  }
+
+  li {
+    @include flex;
+    flex-basis: calc(100% / var(--n)) !important;
+    padding-right: 3%;
+
+    @include max($lg) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    @include max($sm) {
+      padding-right: 0;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  h3 {
+    font-size: calc(14px + 5 * (100vw - 320px) / 1080);
+    color: var(--primary);
+    text-transform: uppercase;
+    font-weight: bold;
+    line-height: 0.95;
+    margin-bottom: 0.9em;
+  }
+
+  p {
+    font-size: calc(15px + 4 * (100vw - 320px) / 1080);
+  }
+
+  .right {
+    flex: 1;
+  }
+}

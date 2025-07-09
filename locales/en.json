@@ -1,0 +1,82 @@
+{
+  "All": {
+    "login": "Login"
+  },
+  "Seo": {
+    "Home": {
+      "title": "LF Labs | Web3 Growth and Market Making",
+      "description": "LF Labs is a Web3 growth and market making firm dedicated to driving innovation and market growth."
+    }
+  },
+  "Navigation": {
+    "home": "Home",
+    "about": "About us",
+    "portfolio": "Portfolio",
+    "market": "Market Making",
+    "blog": "Blog",
+    "contact": "Contact",
+    "team": "Team",
+    "careers": "Careers",
+    "news": "News",
+    "verification": "Verification",
+    "kit": "Media Kit",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use"
+  },
+  "Footer": {
+    "nav": "Navigation",
+    "legal": "Legal",
+    "rights": " All rights reserved"
+  },
+  "Home": {
+    "h1": {
+      "line1": "Driving",
+      "line2": "Web3",
+      "line3": "Growth"
+    },
+    "text": "Through Strategic Investment and Liquidity Partner.",
+    "btn": "Work with us"
+  },
+  "Portfolio": {
+    "title": "Portfolio",
+    "text": "Et hanc quidem praeter oppida multa duae civitates exornant Seleucia opus Seleuci regis, et Claudiopolis quam deduxit.",
+    "btn": "Portfolio on CMC"
+  },
+  "About": {
+    "title": {
+      "line1": "Building",
+      "line2": "Driven-Value",
+      "line3": "Partnerships"
+    },
+    "intro": "As an emerging force in the Web3 space, LF Labs is dedicated to driving innovation and market growth.",
+    "text": "Positioned as a next-generation Web3 investor and market maker, we are committed to adding tangible value to our partners."
+  },
+  "Market": {
+    "title": {
+      "line1": "Advanced",
+      "line2": "Liquidity",
+      "line3": "Management"
+    },
+    "text": "Our partner-driven strategy uses innovative algorithms to sustain and bolster token liquidity.",
+    "btn": "Partner with us",
+    "card1": {
+      "title": "24/7 Support",
+      "text": "Round-the-clock assistance with guaranteed 95% uptime."
+    },
+    "card2": {
+      "title": "Tailored Liquidity Solutions",
+      "text": "Custom liquidity strategies driven by data and client needs."
+    },
+    "card3": {
+      "title": "Wide Integration",
+      "text": "Coverage across 60+ decentralized and centralized platforms."
+    },
+    "card4": {
+      "title": "Global Partnerships",
+      "text": "Trusted by over 700 partners worldwide."
+    }
+  },
+  "Blog": {
+    "title": "What's new?"
+  }
+}

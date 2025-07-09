@@ -1,0 +1,126 @@
+@import "styles/mixins";
+
+.blog {
+  padding: var(--main-spacing) 0;
+}
+
+.title {
+  display: inline-block;
+  font-size: calc(40px + 32 * (100vw - 320px) / 1080);
+
+  &::after {
+    content: "Blog";
+    position: absolute;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    font-family: var(--font-secondary);
+    text-transform: uppercase;
+    font-weight: 200;
+    color: var(--primary);
+    top: 10%;
+    left: 102%;
+    line-height: 1;
+  }
+}
+
+.heading {
+  z-index: 5;
+}
+
+.blur {
+  & > * {
+    left: 20%;
+  }
+}
+
+.list {
+  margin-top: var(--main-spacing);
+
+  li {
+    @include flex(flex-start, flex-start);
+    border: 1px solid var(--stroke);
+    border-width: 1px 0 1px 0;
+    background-color: var(--body);
+    padding: var(--main-padding-2) 0;
+    overflow: hidden;
+    gap: var(--main-padding);
+
+    & + li {
+      margin-top: var(--main-padding);
+    }
+
+    @include max($lg) {
+      flex-wrap: wrap;
+    }
+  }
+
+  time {
+    font-size: calc(12px + 1 * (100vw - 320px) / 1080);
+    line-height: 1.4;
+    letter-spacing: 0.15em;
+    font-family: var(--font-secondary);
+    text-transform: uppercase;
+
+    strong {
+      display: block;
+      font-weight: 400;
+    }
+
+    @include min($lg) {
+      min-width: 20%;
+      max-width: 20%;
+    }
+
+    @include max($lg) {
+      flex: 1;
+    }
+  }
+
+  .content {
+    flex: 1;
+
+    @include max($lg) {
+      min-width: 100%;
+      order: -1;
+    }
+  }
+
+  h3 {
+    font-weight: bold;
+    font-size: calc(18px + 4 * (100vw - 320px) / 1080);
+  }
+
+  p {
+    line-height: 1.5;
+    margin-top: 1.25em;
+
+    @include max($md) {
+      display: none;
+    }
+  }
+
+  .more {
+    --padding-y: 0;
+    right: calc(var(--padding-x) * -1);
+    border: 0;
+    color: var(--primary);
+    background-color: transparent !important;
+  }
+}
+
+.illu {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  transform: translateY(-33%);
+  overflow: hidden;
+  color: var(--primary);
+
+  & > * {
+    top: 50%;
+    left: calc(45% + 250 * (100vw - 320px) / 1080);
+    width: 65%;
+    transform: translateY(-50%);
+    min-width: calc(600px + 350 * (100vw - 320px) / 1080);
+  }
+}

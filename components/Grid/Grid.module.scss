@@ -1,0 +1,22 @@
+@import "styles/mixins";
+
+.grid {
+  @include flex(space-between, stretch);
+  @include translate-x;
+  position: fixed;
+  height: var(--real-height);
+  top: 0;
+  z-index: -10;
+  pointer-events: none;
+}
+
+.line {
+  width: 1px;
+  background-color: var(--stroke);
+
+  @include max($md) {
+    &:nth-child(1) {
+      display: none;
+    }
+  }
+}

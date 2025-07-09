@@ -1,0 +1,10 @@
+@import "styles/mixins";
+
+.anchor {
+  position: absolute;
+  margin-top: calc(var(--header-height) * -1);
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  top: 0;
+}

@@ -1,0 +1,226 @@
+@import "styles/mixins";
+
+$responsive: $lg;
+
+.header {
+  --transition-nav: 0.8s;
+  position: fixed;
+  inset: 0 0 auto;
+  padding: var(--header-padding) 0 0;
+  z-index: 100;
+  pointer-events: none;
+  @include user-select;
+  // display: none;
+  max-width: 100vw;
+
+  a,
+  button {
+    pointer-events: auto;
+  }
+}
+
+.wrapper {
+  @include flex(space-between);
+}
+
+.nav {
+  font-size: 0.8rem;
+  white-space: nowrap;
+
+  ul {
+    @include flex;
+    gap: var(--header-padding);
+    z-index: 150;
+
+    @include min($responsive) {
+      li > * {
+        transform: none !important;
+      }
+    }
+
+    @include max($responsive) {
+      position: fixed;
+      left: 0;
+      inset: 0;
+      flex-direction: column;
+      gap: 6vh;
+
+      li {
+        @include flex;
+        line-height: 0.9;
+        overflow: hidden;
+
+        & > * {
+          transition: none !important;
+          transform: translateY(100%);
+        }
+      }
+
+      a,
+      .btn > button {
+        font-size: calc(24px + 40 * (100vw - 320px) / 1080) !important;
+
+        span {
+          transform: none !important;
+          color: var(--body) !important;
+        }
+
+        &::after {
+          display: none;
+        }
+      }
+
+      a,
+      .btn > button {
+        padding: 0;
+        border: 0;
+
+        svg {
+          display: none !important;
+        }
+      }
+    }
+  }
+}
+
+.logo {
+  display: block;
+  width: calc(80px + 10 * (100vw - 320px) / 1080);
+  z-index: 100;
+
+  svg {
+    width: 100%;
+
+    & > * {
+      transition: fill var(--transition-nav);
+    }
+
+    .lf {
+      fill: var(--text);
+    }
+
+    .labs {
+      fill: var(--primary);
+    }
+  }
+}
+
+.bg {
+  position: fixed;
+  @include flex(stretch, stretch);
+  pointer-events: none;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: var(--real-height);
+
+  & > * {
+    background-color: var(--primary);
+    flex: 1;
+    height: 0;
+
+    &:first-child,
+    &:last-child {
+      min-width: var(--wrapper-padding);
+      max-width: var(--wrapper-padding);
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 1px;
+      background-color: var(--body);
+      opacity: 0.1;
+    }
+
+    @include max($md) {
+      &:nth-last-child(2) {
+        display: none;
+      }
+    }
+  }
+
+  @include min($responsive) {
+    background-color: transparent !important;
+
+    & > * {
+      height: 0 !important;
+    }
+  }
+}
+
+.open {
+  @include max($responsive) {
+    .logo svg > * {
+      fill: var(--body);
+    }
+  }
+
+  .bnav {
+    color: var(--body);
+
+    svg {
+      transform: rotate(0deg) translateY(-5%);
+    }
+  }
+}
+
+.bnav {
+  --size: calc(48px + 16 * (100vw - 320px) / 1080);
+  transition: background-color var(--transition-nav),
+    color var(--transition-nav), border-color var(--transition-nav);
+  width: var(--size);
+  height: var(--size);
+  border: 1px solid currentColor;
+  color: currentColor;
+  z-index: 50;
+  border-radius: var(--radius-1);
+  font-size: calc(var(--size) / 1.5);
+  padding: 0;
+  color: var(--primary);
+
+  @include min($responsive) {
+    display: none;
+  }
+
+  svg {
+    transition: transform 0.4s;
+    transform: rotate(90deg) translateX(-5%);
+  }
+}
+
+.shadow {
+  pointer-events: none;
+  position: absolute;
+  inset: 0 0 -80%;
+  z-index: -1;
+
+  &::before {
+    content: "";
+    position: absolute;
+    background: radial-gradient(var(--body) 0%, transparent 65%);
+    @include blur(50px);
+    border-radius: 50%;
+    inset: -60% 60% 90% 0%;
+  }
+
+  &::after {
+    transition: 0.6s var(--cubic);
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    background: linear-gradient(
+        to bottom,
+        var(--body) 0%,
+        rgba(var(--body-rgb), 0) 75%
+      ),
+      linear-gradient(to bottom, var(--body), rgba(var(--body-rgb), 0));
+  }
+
+  &.active::after {
+    opacity: 1;
+  }
+}

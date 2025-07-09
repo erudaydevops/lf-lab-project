@@ -1,0 +1,11 @@
+@import "styles/mixins";
+
+.noise {
+  position: fixed;
+  inset: 0;
+  background: url(/img/noise.webp) repeat center center;
+  background-size: 500px 500px;
+  z-index: 200;
+  pointer-events: none;
+  @include user-select;
+}

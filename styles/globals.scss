@@ -1,0 +1,108 @@
+@charset "UTF-8";
+
+/* Import base */
+
+@import "colors";
+@import "easing";
+@import "variables";
+@import "reset";
+@import "lenis";
+@import "mixins";
+
+/* General Styles */
+
+html {
+  background-color: var(--body);
+  color: var(--text);
+  font-size: calc(15px + 1 * (100vw - 320px) / 1080);
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  font-weight: 100;
+
+  @include no-scrollbar;
+
+  * {
+    @include selection(rgba(var(--primary-rgb), 0.5), var(--white));
+  }
+}
+
+html,
+body {
+  scroll-behavior: smooth;
+  overscroll-behavior-x: none;
+}
+
+body {
+  font-family: var(--font-main);
+}
+
+svg {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Reveal */
+
+[data-reveal] {
+  --translate: var(--main-padding);
+  opacity: 0;
+  visibility: hidden;
+  will-change: transform, opacity;
+  transform: translate3d(var(--x, 0), var(--y, 0), 0);
+
+  &[data-reveal="bottom"] {
+    --y: var(--translate);
+  }
+
+  &[data-reveal="top"] {
+    --y: calc(var(--translate) * -1);
+  }
+
+  &[data-reveal="right"] {
+    --x: var(--translate);
+  }
+
+  &[data-reveal="left"] {
+    --x: calc(var(--translate) * -1);
+  }
+
+  &[data-reveal="opacity"] {
+    transform: none !important;
+  }
+}
+
+/* Grid */
+
+[data-grid] {
+  --grid-layout-gap: calc(var(--main-padding-2) * 1.5);
+  --grid-column-count: 5;
+  --grid-item-min-width: calc(120px + 24 * (100vw - 320px) / 1080);
+  --gap-count: calc(var(--grid-column-count) - 1);
+  --total-gap-width: calc(var(--gap-count) * var(--grid-layout-gap));
+  --grid-item-max-width: calc(
+    (100% - var(--total-gap-width)) / var(--grid-column-count)
+  );
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Centre les éléments horizontalement */
+  align-items: center; /* Centre les éléments verticalement */
+  gap: var(--grid-layout-gap);
+
+  & > * {
+    flex: 1 1 max(var(--grid-item-min-width), var(--grid-item-max-width));
+    max-width: var(--grid-item-max-width);
+  }
+
+  @include max($lg) {
+    --grid-column-count: 4;
+  }
+
+  @include max($md) {
+    --grid-column-count: 3;
+    --grid-layout-gap: var(--main-padding-2);
+  }
+}

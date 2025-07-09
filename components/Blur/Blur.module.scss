@@ -1,0 +1,17 @@
+@import "styles/mixins";
+
+.blur {
+  width: 100vw;
+  height: var(--height, 100vh);
+  position: absolute;
+  @include user-select;
+  @include translate-center;
+  @include flex;
+  pointer-events: none;
+  overflow: hidden;
+
+  img {
+    width: var(--blur-width, 70%);
+    min-width: calc(600px + 200 * (100vw - 320px) / 1080);
+  }
+}

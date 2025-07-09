@@ -1,0 +1,37 @@
+@import "styles/mixins";
+
+.title {
+  font-size: calc(48px + 32 * (100vw - 320px) / 1080);
+  line-height: 1.25;
+  text-transform: uppercase;
+  font-weight: 800;
+  margin: 0 -0.05em;
+
+  span {
+    display: block;
+  }
+
+  & > span {
+    overflow: hidden;
+
+    span {
+      transform: translateY(100%);
+    }
+
+    &:first-child {
+      margin-top: -0.22em;
+    }
+
+    &:last-child {
+      margin-bottom: -0.12em;
+    }
+
+    & + span {
+      margin-top: -0.42em;
+    }
+  }
+}
+
+.primary {
+  color: var(--primary);
+}

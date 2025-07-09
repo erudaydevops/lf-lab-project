@@ -1,0 +1,110 @@
+@import "styles/mixins";
+
+.footer {
+  width: calc(100% - var(--main-body) * 2);
+  background-color: var(--body);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius-2);
+  left: var(--main-body);
+  margin: var(--main-padding-2) 0 var(--main-body);
+  padding: calc(var(--main-spacing) / 1.15) var(--main-padding-2);
+
+  &::after {
+    content: "";
+    position: absolute;
+    height: calc(var(--main-body) - 1px);
+    width: 100%;
+    background-color: var(--body);
+    top: 100%;
+    margin-top: 1px;
+    left: 0;
+  }
+
+  .blur {
+    top: auto;
+    bottom: calc(var(--main-body) * -1);
+    transform: none;
+    left: calc(var(--main-body) * -1);
+    z-index: 5;
+
+    & > * {
+      top: 60%;
+      transform: translateX(-25%);
+    }
+  }
+}
+
+.wrapper {
+  @include flex(space-between, flex-start);
+  white-space: nowrap;
+  gap: var(--main-padding-2);
+
+  @include max($lg) {
+    flex-wrap: wrap;
+  }
+}
+
+.left {
+  flex: 1.5;
+
+  @include max($lg) {
+    order: 1;
+    min-width: 100%;
+    margin-top: calc(var(--main-spacing) / 2);
+  }
+
+  .merge{
+    display: flex;
+    gap: 7.5em;
+  }
+
+  p {
+    font-size: 0.65em;
+    text-transform: uppercase;
+    font-family: var(--font-secondary);
+    letter-spacing: 0.15em;
+    margin-bottom: var(--main-padding);
+  }
+
+  .logo {
+    width: calc(80px + 10 * (100vw - 320px) / 1080);
+    margin-top: -1em;
+  }
+}
+
+.menu {
+  flex: 1;
+
+  @include max($lg) {
+    order: 0;
+  }
+
+  @include max($sm) {
+    min-width: 100%;
+  }
+
+  li {
+    & + li {
+      margin-top: calc(var(--main-padding) / 1.5);
+    }
+
+    &:first-child {
+      text-transform: uppercase;
+      font-weight: bold;
+      color: var(--primary);
+      padding-bottom: 0.25em;
+    }
+
+    a[data-tooltip]::after {
+      left: -2px;
+      transform: translateY(-130%);
+    }
+  }
+}
+
+.socials {
+  font-size: calc(16px + 4 * (100vw - 320px) / 1080);
+  left: -0.4em;
+  margin: -0.5em 0 1em;
+  color: var(--primary);
+}
