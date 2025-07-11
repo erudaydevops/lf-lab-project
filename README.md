@@ -1,36 +1,99 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+LF Labs — Production-Ready Next.js Deployment
 
-## Getting Started
+This repository contains a fully configured Next.js project with an automated CI/CD pipeline using GitHub Actions, PM2, and AWS EC2.
 
-First, run the development server:
+Technology Stack
 
-```bash
+Framework: Next.js (TypeScript)
+
+Server: Ubuntu EC2 Instance
+
+Process Manager: PM2
+
+Continuous Deployment: GitHub Actions
+
+Deployment Method: SSH, Rsync, PM2
+
+Optional: NGINX for reverse proxy and SSL termination
+
+Key Features
+
+Automatic deployment on push to the main branch
+
+Zero-downtime restarts using PM2
+
+Remote build and dependency installation
+
+PM2 process snapshot saved for persistent restarts
+
+SSH keys and secrets securely managed via GitHub Secrets
+
+Configurable for HTTPS using NGINX and Let's Encrypt
+
+CI/CD Workflow
+
+Code pushed to main triggers GitHub Actions.
+
+The pipeline builds, lints, and deploys the application to the server using Rsync over SSH.
+
+On the server, dependencies are installed and the Next.js application is rebuilt.
+
+PM2 restarts the process and saves the current process list.
+
+Project Structure
+
+.
+├── .github/workflows/ci-cd.yml
+├── package.json
+├── next.config.js
+├── pages/
+├── public/
+├── components/
+├── styles/
+└── ...
+
+Deployment Details
+
+Remote Path: /var/www/lflabs
+
+PM2 Process Name: next-app
+
+Environment: Production
+
+SSH Key: Managed via GitHub Secrets
+
+Usage
+
+Local Development
+
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Production Build
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+npm run build
+npm run start
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Managing PM2 on Server
 
-## Learn More
+pm2 restart next-app
+pm2 logs next-app
+pm2 save
 
-To learn more about Next.js, take a look at the following resources:
+Recommendations
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Use NGINX as a reverse proxy to handle ports 80/443.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Secure traffic with HTTPS using Let's Encrypt.
 
-## Deploy on Vercel
+Restrict SSH access to trusted IP addresses.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Author
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Developed and maintained by Toni Stark
+
+License
+
+This project is licensed under the ISC License.
+
+Thank you for reviewing this project.
