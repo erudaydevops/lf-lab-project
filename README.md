@@ -81,38 +81,38 @@ This is a production-ready **Next.js project** with a complete **CI/CD pipeline*
 
 **Run locally**
 
-npm install
-npm run dev
+   - npm install
+   - npm run dev
 
 ---
 
 **Build for production**
 
-npm run build
-npm run start
+   - npm run build
+   - npm run start
 
 ---
 
 **Manage PM2 on server**
 
-pm2 restart next-app
-pm2 logs next-app
-pm2 save
+   - pm2 restart next-app
+   - pm2 logs next-app
+   - pm2 save
 
 ---
 
 **Production Tips**
 
-Use NGINX as a reverse proxy to forward ports 80/443 to localhost:3000
+   - vUse NGINX as a reverse proxy to forward ports 80/443 to localhost:3000
 
-Secure with HTTPS (Let's Encrypt + Certbot)
+   - Secure with HTTPS (Let's Encrypt + Certbot)
 
-Use a domain name for production access
+   - Use a domain name for production access
 
-Restrict SSH (port 22) to trusted IPs only
+   - Restrict SSH (port 22) to trusted IPs only
 
 ---
 
 📢 Author
-Built & maintained by uday patil
-💪 DevOps | Next.js | AWS | CI/CD Automation
+   - Built & maintained by uday patil
+   - 💪 DevOps | Next.js | AWS | CI/CD Automation
