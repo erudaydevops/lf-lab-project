@@ -40,6 +40,5 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "
             cd /var/www/lflabs &&
             npm install &&
-            npm run build &&
-            pm2 restart next-app || pm2 start npm --name next-app -- run start:prod
+            npm run build 
           "
