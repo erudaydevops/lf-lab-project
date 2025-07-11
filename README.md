@@ -1,4 +1,4 @@
-# 🚀 LF Labs — Next.js Production Deployment
+#  LF Labs — Next.js Production Deployment
 
 This is a production-ready **Next.js project** with a complete **CI/CD pipeline** using **GitHub Actions**, **PM2**, and **AWS EC2**.
 
