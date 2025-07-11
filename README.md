@@ -1,99 +1,118 @@
-LF Labs — Production-Ready Next.js Deployment
+# 🚀 LF Labs — Next.js Production Deployment
 
-This repository contains a fully configured Next.js project with an automated CI/CD pipeline using GitHub Actions, PM2, and AWS EC2.
+This is a production-ready **Next.js project** with a complete **CI/CD pipeline** using **GitHub Actions**, **PM2**, and **AWS EC2**.
 
-Technology Stack
+---
 
-Framework: Next.js (TypeScript)
+## 📦 Tech Stack
 
-Server: Ubuntu EC2 Instance
+- **Framework:** Next.js (TypeScript)
+- **Server:** Ubuntu EC2 Instance
+- **Process Manager:** PM2
+- **CI/CD:** GitHub Actions
+- **Deployment:** SSH + Rsync + PM2
+- **Reverse Proxy (optional):** NGINX
 
-Process Manager: PM2
+---
 
-Continuous Deployment: GitHub Actions
+## ✅ Features
 
-Deployment Method: SSH, Rsync, PM2
+- Automatic deployment to AWS EC2 on every `main` branch push
+- PM2 process manager for zero-downtime restarts
+- Remote `npm install` and `next build` on the server
+- Automatic `pm2 save` for reboot persistence
+- SSH keys and secrets managed securely in GitHub Actions
+- Ready for NGINX + HTTPS (Let's Encrypt) if needed
 
-Optional: NGINX for reverse proxy and SSL termination
+---
 
-Key Features
+## ⚙️ CI/CD Workflow
 
-Automatic deployment on push to the main branch
+1. **Push to `main` branch**
+   - GitHub Actions builds & lints the project
+   - Rsync deploys the build to `/var/www/lflabs` on EC2
 
-Zero-downtime restarts using PM2
+2. **On EC2 server**
+   - Runs `npm install` & `npm run build`
+   - Restarts the `next-app` process with PM2
+   - Saves the PM2 process list with `pm2 save` for auto restart
 
-Remote build and dependency installation
+---
 
-PM2 process snapshot saved for persistent restarts
-
-SSH keys and secrets securely managed via GitHub Secrets
-
-Configurable for HTTPS using NGINX and Let's Encrypt
-
-CI/CD Workflow
-
-Code pushed to main triggers GitHub Actions.
-
-The pipeline builds, lints, and deploys the application to the server using Rsync over SSH.
-
-On the server, dependencies are installed and the Next.js application is rebuilt.
-
-PM2 restarts the process and saves the current process list.
-
-Project Structure
+## 📁 Project Structure
 
 .
-├── .github/workflows/ci-cd.yml
-├── package.json
-├── next.config.js
-├── pages/
-├── public/
-├── components/
-├── styles/
-└── ...
+├── .github/workflows/ # GitHub Actions workflow files
+├── app/ # Main application folder (Next.js 13+ app dir)
+├── components/ # Reusable React components
+├── config/ # Configuration files
+├── hooks/ # Custom React hooks
+├── libs/ # Libraries and utilities
+├── locales/ # Localization files
+├── providers/ # Context providers
+├── public/img/ # Public static assets
+├── styles/ # Stylesheets (CSS/SASS)
+├── .env # Environment variables
+├── .eslintrc.json # ESLint configuration
+├── .gitattributes # Git attributes
+├── .gitignore # Git ignore rules
+├── .prettierrc # Prettier configuration
+├── README.md # Project documentation
+├── deploy.sh # Deployment script (optional)
+├── next.config.mjs # Next.js configuration
+├── package.json # Project dependencies and scripts
+├── package-lock.json # NPM lock file
+├── pnpm-lock.yaml # PNPM lock file (if used)
+├── tsconfig.json # TypeScript configuration
 
-Deployment Details
 
-Remote Path: /var/www/lflabs
+---
 
-PM2 Process Name: next-app
+## 🚀 Deployment Info
 
-Environment: Production
+- **Server Path:** `/var/www/lflabs`
+- **PM2 Process Name:** `next-app`
+- **Environment:** Production
+- **SSH:** Private key managed in GitHub Secrets
 
-SSH Key: Managed via GitHub Secrets
+---
 
-Usage
+## ⚡ Commands
 
-Local Development
+**Run locally**
 
 npm install
 npm run dev
 
-Production Build
+---
+
+**Build for production**
 
 npm run build
 npm run start
 
-Managing PM2 on Server
+---
+
+**Manage PM2 on server**
 
 pm2 restart next-app
 pm2 logs next-app
 pm2 save
 
-Recommendations
+---
 
-Use NGINX as a reverse proxy to handle ports 80/443.
+**Production Tips**
 
-Secure traffic with HTTPS using Let's Encrypt.
+Use NGINX as a reverse proxy to forward ports 80/443 to localhost:3000
 
-Restrict SSH access to trusted IP addresses.
+Secure with HTTPS (Let's Encrypt + Certbot)
 
-Author
+Use a domain name for production access
 
-Developed and maintained by Toni Stark
+Restrict SSH (port 22) to trusted IPs only
 
-License
+---
 
-This project is licensed under the ISC License.
-
-Thank you for reviewing this project.
+📢 Author
+Built & maintained by uday patil
+💪 DevOps | Next.js | AWS | CI/CD Automation
