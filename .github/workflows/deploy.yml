@@ -10,23 +10,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Repo Checkout
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      # 2️⃣ Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
 
+      # 3️⃣ Install Dependencies
       - name: Install Dependencies
         run: npm install
 
+      # 4️⃣ Lint Code
       - name: Lint Code
         run: npm run lint
 
+      # 5️⃣ Build Project
       - name: Build Next.js Project
         run: npm run build
 
+      # 6️⃣ Deploy Code to EC2
       - name: Deploy to EC2 via SSH
         uses: easingthemes/ssh-deploy@v2.2.11
         with:
@@ -35,10 +41,19 @@ jobs:
           REMOTE_HOST: ${{ secrets.EC2_HOST }}
           TARGET: /var/www/lflabs
 
+      # 7️⃣ Add SSH Key to Runner (for manual SSH)
+      - name: Add SSH key to runner
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      # 8️⃣ Install & Restart App on EC2
       - name: Install dependencies & restart server on EC2
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "
             cd /var/www/lflabs &&
             npm install &&
-            npm run build 
+            npm run build &&
+            pm2 restart next-app || pm2 start npm --name next-app -- run start:prod
           "
