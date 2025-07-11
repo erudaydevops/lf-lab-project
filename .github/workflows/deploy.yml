@@ -48,12 +48,12 @@ jobs:
           echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
 
-      # 8️⃣ Install & Restart App on EC2
       - name: Install dependencies & restart server on EC2
-        run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "
-            cd /var/www/lflabs &&
-            npm install &&
-            npm run build &&
-            pm2 restart next-app || pm2 start npm --name next-app -- run start:prod
-          "
+  run: |
+    ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "
+      cd /var/www/lflabs &&
+      npm install &&
+      npm run build &&
+      pm2 restart next-app || pm2 start npm --name next-app -- run start:prod &&
+      pm2 save
+    "
