@@ -27,17 +27,17 @@ jobs:
       - name: Build Next.js Project
         run: npm run build
 
-      - name: Deploy to EC2
+      - name: Deploy to EC2 via SSH
         uses: easingthemes/ssh-deploy@v2.2.11
         with:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          REMOTE_USER: ec2-user
-          SERVER_IP: ${{ secrets.EC2_SERVER_IP }}
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_KEY }}
+          REMOTE_USER: ${{ secrets.EC2_USERNAME }}
+          REMOTE_HOST: ${{ secrets.EC2_HOST }}
           TARGET: /var/www/lflabs
 
-      - name: Install dependencies and restart server on EC2
+      - name: Install dependencies & restart server on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@${{ secrets.EC2_SERVER_IP }} "
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "
             cd /var/www/lflabs &&
             npm install &&
             npm run build &&
