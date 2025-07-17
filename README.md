@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+#  LF Labs — Next.js Production Deployment
 
-## Getting Started
+This is a production-ready **Next.js project** with a complete **CI/CD pipeline** using **GitHub Actions**, **PM2**, and **AWS EC2**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 📦 Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Framework:** Next.js (TypeScript)
+- **Server:** Ubuntu EC2 Instance
+- **Process Manager:** PM2
+- **CI/CD:** GitHub Actions
+- **Deployment:** SSH + Rsync + PM2
+- **Reverse Proxy (optional):** NGINX
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## ✅ Features
 
-## Learn More
+- Automatic deployment to AWS EC2 on every `main` branch push
+- PM2 process manager for zero-downtime restarts
+- Remote `npm install` and `next build` on the server
+- Automatic `pm2 save` for reboot persistence
+- SSH keys and secrets managed securely in GitHub Actions
+- Ready for NGINX + HTTPS (Let's Encrypt) if needed
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ⚙️ CI/CD Workflow
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. **Push to `main` branch**
+   - GitHub Actions builds & lints the project
+   - Rsync deploys the build to `/var/www/lflabs` on EC2
 
-## Deploy on Vercel
+2. **On EC2 server**
+   - Runs `npm install` & `npm run build`
+   - Restarts the `next-app` process with PM2
+   - Saves the PM2 process list with `pm2 save` for auto restart
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 📁 Project Structure
+
+.
+├── .github/workflows/ # GitHub Actions workflow files
+├── app/ # Main application folder (Next.js 13+ app dir)
+├── components/ # Reusable React components
+├── config/ # Configuration files
+├── hooks/ # Custom React hooks
+├── libs/ # Libraries and utilities
+├── locales/ # Localization files
+├── providers/ # Context providers
+├── public/img/ # Public static assets
+├── styles/ # Stylesheets (CSS/SASS)
+├── .env # Environment variables
+├── .eslintrc.json # ESLint configuration
+├── .gitattributes # Git attributes
+├── .gitignore # Git ignore rules
+├── .prettierrc # Prettier configuration
+├── README.md # Project documentation
+├── deploy.sh # Deployment script (optional)
+├── next.config.mjs # Next.js configuration
+├── package.json # Project dependencies and scripts
+├── package-lock.json # NPM lock file
+├── pnpm-lock.yaml # PNPM lock file (if used)
+├── tsconfig.json # TypeScript configuration
+
+
+---
+
+## 🚀 Deployment Info
+
+- **Server Path:** `/var/www/lflabs`
+- **PM2 Process Name:** `next-app`
+- **Environment:** Production
+- **SSH:** Private key managed in GitHub Secrets
+
+---
+
+## ⚡ Commands
+
+**Run locally**
+
+   - npm install
+   - npm run dev
+
+---
+
+**Build for production**
+
+   - npm run build
+   - npm run start
+
+---
+
+**Manage PM2 on server**
+
+   - pm2 restart next-app
+   - pm2 logs next-app
+   - pm2 save
+
+---
+
+**Production Tips**
+
+   - vUse NGINX as a reverse proxy to forward ports 80/443 to localhost:3000
+
+   - Secure with HTTPS (Let's Encrypt + Certbot)
+
+   - Use a domain name for production access
+
+   - Restrict SSH (port 22) to trusted IPs only
+
+---
+
+📢 Author
+   - Built & maintained by uday patil
+   - 💪 DevOps | Next.js | AWS | CI/CD Automation

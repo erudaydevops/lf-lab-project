@@ -1,37 +1,60 @@
-deploy:
-  needs: ci
-  if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 18
-    - name: Install dependencies
-      run: npm install
-    - name: Build Next.js
-      run: npm run build
-    - name: Add EC2 to known_hosts
-      run: |
-        mkdir -p ~/.ssh
-        ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
-    - name: Add SSH private key
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-    - name: Create deployment package
-      run: tar --exclude='.git' --exclude='node_modules' -czf app.tar.gz .
-    - name: Copy to EC2
-      run: scp -i ~/.ssh/id_rsa app.tar.gz ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/home/${{ secrets.EC2_USERNAME }}/lf-lab-project/
-    - name: Deploy on EC2
-      run: |
-        ssh -i ~/.ssh/id_rsa ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "
-          cd /home/${{ secrets.EC2_USERNAME }}/lf-lab-project &&
-          tar -xzf app.tar.gz &&
-          chmod +x deploy.sh &&
-          ./deploy.sh
-        "
-      timeout-minutes: 10
+name: Next.js CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ✅ 1️⃣ Checkout repo
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # ✅ 2️⃣ Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      # ✅ 3️⃣ Install dependencies
+      - name: Install Dependencies
+        run: npm install
+
+      # ✅ 4️⃣ Lint
+      - name: Lint Code
+        run: npm run lint
+
+      # ✅ 5️⃣ Build Next.js app
+      - name: Build Next.js Project
+        run: npm run build
+
+      # ✅ 6️⃣ Deploy to EC2 (rsync)
+      - name: Deploy to EC2 via SSH
+        uses: easingthemes/ssh-deploy@v2.2.11
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_KEY }}
+          REMOTE_USER: ${{ secrets.EC2_USERNAME }}
+          REMOTE_HOST: ${{ secrets.EC2_HOST }}
+          TARGET: /var/www/lflabs
+
+      # ✅ 7️⃣ Make SSH key available for manual ssh
+      - name: Add SSH key to runner
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+      # ✅ 8️⃣ Install dependencies on EC2 & restart server with PM2 & save snapshot
+      - name: Install deps, build & restart on EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} "
+            cd /var/www/lflabs &&
+            npm install &&
+            npm run build &&
+            pm2 restart next-app || pm2 start npm --name next-app -- run start:prod &&
+            pm2 save
+          "
